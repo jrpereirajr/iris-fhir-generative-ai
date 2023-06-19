@@ -9,6 +9,8 @@
       "active": true,
       "username": "_SYSTEM",
       "password": "SYS",
+      "host": "localhost",
+      "port": 32783,
       "docker-compose": {
         "service": "iris",
         "internalPort": 52773
@@ -24,7 +26,7 @@
         "askForPassword": false,
         "connectionMethod": "Server and Port",
         "driver": "InterSystems IRIS",
-        "name": "iris-fhir-template",
+        "name": "iris-fhir-generative",
         "namespace": "FHIRSERVER",
         "password": "SYS",
         "port": 32783,

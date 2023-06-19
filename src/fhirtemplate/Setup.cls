@@ -3,7 +3,6 @@ Class fhirtemplate.Setup
 
 ClassMethod SetupFHIRServer(ns) As %Status
 {
-    set ns=$g(ns,$namespace)
     set ns="FHIRSERVER"
     zn "HSLIB"
     set namespace=ns
@@ -11,7 +10,6 @@ ClassMethod SetupFHIRServer(ns) As %Status
     Set strategyClass = "HS.FHIRServer.Storage.Json.InteractionsStrategy"
     set metadataPackages = $lb("hl7.fhir.r4.core@4.0.1")
     Set metadataConfigKey = "HL7v40"
-    ;set importdir="/opt/irisapp/src"
 
     //Install a Foundation namespace and change to it
     Do ##class(HS.HC.Util.Installer).InstallFoundation(namespace)

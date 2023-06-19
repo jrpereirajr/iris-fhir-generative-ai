@@ -1,8 +1,10 @@
 ARG IMAGE=intersystemsdc/irishealth-community:latest
 FROM $IMAGE
 
+ARG OPENAI_API_KEY
+ENV OPENAI_API_KEY=$OPENAI_API_KEY
+
 WORKDIR /home/irisowner/irisdev
-#RUN chown ${ISC_PACKAGE_MGRUSER}:${ISC_PACKAGE_IRISGROUP} /opt/irisapp
 
 # run iris and initial 
 RUN --mount=type=bind,src=.,dst=. \
