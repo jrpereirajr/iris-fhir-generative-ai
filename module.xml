@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Export generator="Cache" version="25">
-  <Document name="iris-fhir-generative.ZPM">
+  <Document name="iris-fhir-generative-ai.ZPM">
     <Module>
-      <Name>iris-fhir-generative</Name>
+      <Name>iris-fhir-generative-ai</Name>
       <Version>0.0.0</Version>
       <Description>InterSystems FHIR Server assisted by generative AI</Description>
       <Keywords>FHIR,Server,AI,generative AI,OpenAI,chat-gpt</Keywords>

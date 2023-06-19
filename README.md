@@ -1,8 +1,8 @@
- [![Gitter](https://img.shields.io/badge/Available%20on-Intersystems%20Open%20Exchange-00b2a9.svg)](https://openexchange.intersystems.com/package/iris-fhir-generative)
- [![Quality Gate Status](https://community.objectscriptquality.com/api/project_badges/measure?project=intersystems_iris_community%2Firis-fhir-generative&metric=alert_status)](https://community.objectscriptquality.com/dashboard?id=intersystems_iris_community%2Firis-fhir-generative)
- [![Reliability Rating](https://community.objectscriptquality.com/api/project_badges/measure?project=intersystems_iris_community%2Firis-fhir-generative&metric=reliability_rating)](https://community.objectscriptquality.com/dashboard?id=intersystems_iris_community%2Firis-fhir-generative)
+ [![Gitter](https://img.shields.io/badge/Available%20on-Intersystems%20Open%20Exchange-00b2a9.svg)](https://openexchange.intersystems.com/package/iris-fhir-generative-ai)
+ [![Quality Gate Status](https://community.objectscriptquality.com/api/project_badges/measure?project=intersystems_iris_community%2Firis-fhir-generative-ai&metric=alert_status)](https://community.objectscriptquality.com/dashboard?id=intersystems_iris_community%2Firis-fhir-generative-ai)
+ [![Reliability Rating](https://community.objectscriptquality.com/api/project_badges/measure?project=intersystems_iris_community%2Firis-fhir-generative-ai&metric=reliability_rating)](https://community.objectscriptquality.com/dashboard?id=intersystems_iris_community%2Firis-fhir-generative-ai)
 
-# iris-fhir-generative
+# iris-fhir-generative-ai
 // todo: project description
 
 ## Prerequisites
@@ -17,7 +17,7 @@ Make sure you have [git](https://git-scm.com/book/en/v2/Getting-Started-Installi
 Open IRIS for Health installation with IPM client installed. Call in any namespace:
 
 ```objectscript
-zpm "install iris-fhir-generative"
+zpm "install iris-fhir-generative-ai"
 ```
 
 This will install FHIR server in FHIRSERVER namespace.
@@ -25,7 +25,7 @@ This will install FHIR server in FHIRSERVER namespace.
 Or call the following for installing programmatically:
 
 ```objectscript
-Set sc = $zpm("install iris-fhir-generative")
+Set sc = $zpm("install iris-fhir-generative-ai")
 ```
 
 ### Docker (e.g. for dev purposes)
@@ -33,7 +33,7 @@ Set sc = $zpm("install iris-fhir-generative")
 Clone/git pull the repo into any local directory
 
 ```bash
-git clone https://github.com/jrpereirajr/iris-fhir-generative-ai.git
+git clone https://github.com/jrpereirajr/iris-fhir-generative-ai-ai.git
 ```
 
 Open the terminal in this directory and run the following.
@@ -63,7 +63,7 @@ docker-compose up -d
 ```
 
 ## Patient data
-The template goes with 5 preloaded patents in [/data/fhir](https://github.com/jrpereirajr/iris-fhir-generative-ai/tree/master/data/fhir) folder which are being loaded during [docker build](https://github.com/jrpereirajr/iris-fhir-generative-ai/src/fhirtemplate/Setup.cls#L32)
+The template goes with 5 preloaded patents in [/data/fhir](https://github.com/jrpereirajr/iris-fhir-generative-ai-ai/tree/master/data/fhir) folder which are being loaded during [docker build](https://github.com/jrpereirajr/iris-fhir-generative-ai-ai/src/fhirtemplate/Setup.cls#L32)
 You can generate more patients doing the following. Open shel terminal in repository folder and call:
 
 ```bash
@@ -145,4 +145,4 @@ and start the container with:
 docker-compose up -d
 ```
 
-This and other helpful commands you can find in [dev.md](https://github.com/jrpereirajr/iris-fhir-generative-ai/tree/master/dev.md)
+This and other helpful commands you can find in [dev.md](https://github.com/jrpereirajr/iris-fhir-generative-ai-ai/tree/master/dev.md)
