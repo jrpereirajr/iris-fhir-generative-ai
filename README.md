@@ -50,15 +50,28 @@ For Windows (MS DOS):
 set OPENAI_API_KEY=your_api_key_here
 ```
 
-For Windows (Powershell):
-```powershell
+For Windows (PowerShell):
+```PowerShell
 $env:OPENAI_API_KEY = "your_api_key_here"
 ```
 
 Next, build and run the project image:
 
+For Linux:
 ```bash
 docker-compose build --build-arg OPENAI_API_KEY=$OPENAI_API_KEY
+docker-compose up -d
+```
+
+For Windows (MS DOS):
+```bat
+docker-compose build --build-arg OPENAI_API_KEY=%OPENAI_API_KEY%
+docker-compose up -d
+```
+
+For Windows (PowerShell):
+```powershell
+docker-compose build --build-arg OPENAI_API_KEY=$env:OPENAI_API_KEY
 docker-compose up -d
 ```
 
