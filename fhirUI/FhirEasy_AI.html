@@ -23,27 +23,56 @@
                 </div>
             </div>
             <div class="msg-container">
-                <div class="msg-sent">Hi</div>
-                <div class="msg-received">hello</div>
-                <div class="msg-sent">Hullo</div>
-                <div class="msg-received">hello world</div>
-                <div class="msg-sent">Hi</div>
-                <div class="msg-received">hello</div>
-                <div class="msg-sent">Hullo</div>
-                <div class="msg-received">hello world</div>
-                <div class="msg-sent">Hi</div>
-                <div class="msg-received">hello</div>
-                <div class="msg-sent">Hullo</div>
-                <div class="msg-received">hello world</div>
+                <div class="msg-received">Welcome to FHIREasy, how can I help you?</div>
             </div>
 
         </div>
         <div class="d-flex align-items-center justify-content-between px-4 py-3 chat-top">
             <div class="flex-column">
-                <input type="text" class="message-input w-100" placeholder="Type your question here..." >
+                <input type="search" class="message-input w-100" placeholder="Type your question here..." >
                 <span class="material-symbols-outlined">send</span>
             </div>
         </div>
 
     </body>
+    <script>
+
+        const onclick = () => {
+        }
+
+        const sendPrompt = () => {
+            const prompt = document.querySelector('.message-input'),
+                container = document.querySelector('.msg-container');
+            if (!!!prompt.value) return;
+            const value = prompt.value,
+                message = document.createElement('div');
+            prompt.value = '';
+            message.classList.add('msg-sent');
+            container.appendChild(message);
+            message.textContent = value;
+        }
+
+        const typewriter = (input, text) => {
+            if (!!!text) return
+            text = text.split('');
+            input.innerHTML += text.shift();
+            text = text.join('');
+
+            setTimeout(typeWriter, 175);
+        }
+
+        window.onload = event => {
+            const prompt = document.querySelector('.message-input');
+            prompt.onkeydown = e => {
+                if (e.key === "Enter") {
+                    sendPrompt();
+                }
+            }
+
+            document.querySelector('.material-symbols-outlined').addEventListener('click', e => {
+                sendPrompt();
+            })
+    
+        };
+    </script>
 </html>

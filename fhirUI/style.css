@@ -34,6 +34,7 @@ body {
 
 .msg-container{
     max-height: 80vh;
+    min-height: 78vh;
     overflow-y: scroll;
     padding: 20px;
 }
