@@ -9,6 +9,8 @@
         <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
         <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
         <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/gh/khushit-shah/WriteIt.js@latest/WriteIt.min.js"></script>
+        
     </head>
     <body class="d-flex align-items-center">
         <div class="d-flex w-75 mx-auto chat-wrapper mat-card dash-card p-0">
@@ -37,10 +39,7 @@
     </body>
     <script>
 
-        const onclick = () => {
-        }
-
-        const sendPrompt = () => {
+        const sendPrompt = async () => {
             const prompt = document.querySelector('.message-input'),
                 container = document.querySelector('.msg-container');
             if (!!!prompt.value) return;
@@ -50,6 +49,19 @@
             message.classList.add('msg-sent');
             container.appendChild(message);
             message.textContent = value;
+            const resp = await fetch('https://swapi.dev/api/starships/9/', {method: 'GET'})
+            .then( response => {
+                return response.json()
+            })
+
+            const receive = document.createElement('div');
+            receive.classList.add('msg-received');
+            receive.id = crypto.randomUUID();
+            receive.setAttribute('writeit-animate', "");
+            receive.setAttribute('writeit-speed', 20)
+            receive.setAttribute('writeit-char', "_");
+            receive.textContent = resp.manufacturer;
+            container.appendChild(receive);
         }
 
         const typewriter = (input, text) => {
