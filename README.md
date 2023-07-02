@@ -278,11 +278,15 @@ This is due the stochastic nature of the AI model. I mean, in the ChatARKit proj
 
 But, it's important to note that I am not saying that AI models can't perform such tasks. What I'm saying is that the design used in this project needs improvement.
 
+Important to note that this project was not used more advanced techniques to use generatives AIs, like [Langchain](https://python.langchain.com/docs/get_started/introduction.html) and [AutoGPT](https://autogpt.net/autogpt-installation-and-features/). Here a more "pure" approach was used, but using such more sophisticated tools could be lead to better results.
+
 Regarding security, the code analyzer found all security issues tested.
 
 However, this does not mean that the code gnerated by AI model is 100% secure. Futhermore, allowing execution of Python code generated externally may be definitely dangerous. You even can't say with 100% sure that the system that is giving the Python code is actually the OpenAI API server...
 
 A better way to avoid security issues may be try other languages less powerful than Python, or try to create you own "language" and present it to the AI model, like in [this very simple example](https://platform.openai.com/examples/default-text-to-command).
+
+Finally, it's important to note that aspects like code performance was not covered in this project and probably will be a good subject for a future work as well.
 
 So, I hope you found this project interesting and useful.
 
