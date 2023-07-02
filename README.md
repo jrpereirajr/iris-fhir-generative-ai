@@ -174,6 +174,14 @@ Each run to answer a question has a session ID. You can find it in the column 'S
 Do ##class(fhirgenerativeai.FHIRGenerativeAIService).RunInTerminal("", "asdfghjk12345678")
 ```
 
+You also can check all log events using this SQL:
+
+```sql
+SELECT *
+FROM fhirgenerativeai.LogTable
+order by id desc
+```
+
 ## Tests
 
 Some tests was executed to get information to measure the performance of the AI model.
