@@ -15,7 +15,7 @@ ClassMethod DoAccuracyTests()
     For i = 1:1:$LL(prompts) {
         Set prompt = $LG(prompts, i)
         Write "processing prompt: "_prompt_"...",!
-        Do ..RepeatTest(prompt, 1, i)
+        Do ..RepeatTest(prompt, 5, i)
     }
 }
 
