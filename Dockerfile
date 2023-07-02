@@ -8,6 +8,7 @@ WORKDIR /home/irisowner/irisdev
 
 # run iris and initial 
 RUN --mount=type=bind,src=.,dst=. \
+    pip3 install -r requirements.txt && \
     iris start IRIS && \
 	iris session IRIS < iris.script && \
     iris stop IRIS quietly
