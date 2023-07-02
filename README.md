@@ -135,6 +135,8 @@ For instace, the following questions was used to test the project:
 
 You can found output examples for those questions [here](misc/tests-accuacy).
 
+> Please, note that if you try that on your system results may be different, even if you use the same prompt. This is due the stochastic nature of LLM models.
+
 Those questions was suggested by ChatGPT. It was asked that the questions was created by a way which the level of complexity was increasing. The exception was the 3rd question, that was proposed by the author.
 
 ## Prompt Engineering
@@ -177,6 +179,8 @@ Do ##class(fhirgenerativeai.FHIRGenerativeAIService).RunInTerminal("", "asdfghjk
 Some tests was executed to get information to measure the performance of the AI model.
 
 Each test was performed 5 times and them outputs are stored in the [this](misc/tests-accuacy) and [this](misc/tests-security) direcotries.
+
+> Please, note that if you try that on your system results may be different, even if you use the same prompt. This is due the stochastic nature of LLM models.
 
 ### Accuracy
 
