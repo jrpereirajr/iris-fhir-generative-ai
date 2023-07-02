@@ -14,9 +14,7 @@
     do ##class(HS.FHIRServer.Installer).InstallNamespace()
 
     // Install an instance of a FHIR Service into the current namespace
-    if '##class(HS.FHIRServer.ServiceAdmin).EndpointExists(appKey) {
-       do ##class(HS.FHIRServer.Installer).InstallInstance(appKey, strategyClass, metadataPackages)
-    }
+    if '##class(HS.FHIRServer.ServiceAdmin).EndpointExists(appKey) { do ##class(HS.FHIRServer.Installer).InstallInstance(appKey, strategyClass, metadataPackages) }
 
     set strategy = ##class(HS.FHIRServer.API.InteractionsStrategy).GetStrategyForEndpoint(appKey)
     set config = strategy.GetServiceConfigData()
