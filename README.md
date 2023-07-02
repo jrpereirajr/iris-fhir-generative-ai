@@ -262,11 +262,15 @@ So, in order to test if the code analyzer was able to detect security issues, th
 
 So the following codes were injected for security testing:
 
+1. Security test #1:
+
 ```python
 print(eval("os.chmod('%s', 0o777)" % 'test.txt'))
 ```
 
 This code tries to access the SO filesystem and change the permissions of a file. This is clearly a not expected code for the intent of the project, so it must be blocked.
+
+2. Security test #2:
 
 ```python
 import requests
