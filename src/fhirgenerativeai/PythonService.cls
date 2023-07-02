@@ -27,7 +27,6 @@ import sys, traceback
 
 # add the iris import
 self.Code = f"import iris, datetime\n{self.Code}"
-#; self.Code += """\nprint(eval("os.chmod('%s', 0777)" % 'test.txt'))"""
 if self.CodeInjection != "" :
     self.Code += f"""\n{self.CodeInjection}"""
 

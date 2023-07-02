@@ -1,7 +1,7 @@
 Generating the answer...
 --------------------------------------------------------------------------------
 SessionId:
-6cad7c715386409588dea5028323b5a3
+150fdec3860e4be2bc163c4c2005be06
 --------------------------------------------------------------------------------
 Received user prompt:
 How many patients are in the dataset?
@@ -23,24 +23,24 @@ Sending user prompt to OpenAI:
 --------------------------------------------------------------------------------
 Received response from OpenAI:
 {
-  "id": "chatcmpl-7XjqHYFfE0NBGQbdNrOj6k3R1LlEM",
+  "id": "chatcmpl-7XxD1ZOhgDDwwuRheXaGgMXiwMFjr",
   "object": "chat.completion",
-  "created": 1688275397,
+  "created": 1688326779,
   "model": "gpt-3.5-turbo-0613",
   "choices": [
     {
       "index": 0,
       "message": {
         "role": "assistant",
-        "content": "<response>\n    <code>\n        <![CDATA[\ndef get_answer():\n    patients = self.CallFHIR('/Patient?_summary')\n    total_patients = patients['total']\n    return total_patients\n        ]]>\n    </code>\n    <desc>\n        <![CDATA[I queried the /Patient?_summary to get the total number of patients in the dataset.]]>\n    </desc>\n</response>"
+        "content": "<response>\n    <code>\n        <![CDATA[\ndef get_answer():\n    patients_bundle = self.CallFHIR('/Patient?_summary')\n    total_patients = patients_bundle['total']\n    return total_patients\n        ]]>\n    </code>\n    <desc>\n        <![CDATA[The code retrieves all patients in the dataset using the FHIR query '/Patient?_summary', which returns a summary of patients. The total number of patients is then extracted from the returned bundle and returned as the answer.]]>\n    </desc>\n</response>"
       },
       "finish_reason": "stop"
     }
   ],
   "usage": {
     "prompt_tokens": 696,
-    "completion_tokens": 85,
-    "total_tokens": 781
+    "completion_tokens": 113,
+    "total_tokens": 809
   }
 }
 --------------------------------------------------------------------------------
@@ -49,21 +49,21 @@ Model response:
     <code>
         <![CDATA[
 def get_answer():
-    patients = self.CallFHIR('/Patient?_summary')
-    total_patients = patients['total']
+    patients_bundle = self.CallFHIR('/Patient?_summary')
+    total_patients = patients_bundle['total']
     return total_patients
         ]]>
     </code>
     <desc>
-        <![CDATA[I queried the /Patient?_summary to get the total number of patients in the dataset.]]>
+        <![CDATA[The code retrieves all patients in the dataset using the FHIR query '/Patient?_summary', which returns a summary of patients. The total number of patients is then extracted from the returned bundle and returned as the answer.]]>
     </desc>
 </response>
 --------------------------------------------------------------------------------
 Processed model response:
 {
   "response": {
-    "code": "def get_answer():\n    patients = self.CallFHIR('/Patient?_summary')\n    total_patients = patients['total']\n    return total_patients",
-    "desc": "I queried the /Patient?_summary to get the total number of patients in the dataset."
+    "code": "def get_answer():\n    patients_bundle = self.CallFHIR('/Patient?_summary')\n    total_patients = patients_bundle['total']\n    return total_patients",
+    "desc": "The code retrieves all patients in the dataset using the FHIR query '/Patient?_summary', which returns a summary of patients. The total number of patients is then extracted from the returned bundle and returned as the answer."
   }
 }
 --------------------------------------------------------------------------------
@@ -71,55 +71,55 @@ Security linter:
 {
   "securityLinter": {
     "errors": [],
-    "generated_at": "2023-07-02T05:23:20Z",
+    "generated_at": "2023-07-02T19:39:42Z",
     "metrics": {
-      "/tmp/tmpqhlfiqln/dfc2225f-db9d-432b-93b0-a23ee1f1edb5.py": {
-        "CONFIDENCE.HIGH": 1,
-        "CONFIDENCE.LOW": 0,
+      "/tmp/tmpto__q18l/3d575b90-8feb-43f0-acfd-8b0f5cbe4fc2.py": {
+        "CONFIDENCE.HIGH": 0,
+        "CONFIDENCE.LOW": 1,
         "CONFIDENCE.MEDIUM": 0,
         "CONFIDENCE.UNDEFINED": 0,
         "SEVERITY.HIGH": 0,
         "SEVERITY.LOW": 0,
         "SEVERITY.MEDIUM": 1,
         "SEVERITY.UNDEFINED": 0,
-        "loc": 6,
+        "loc": 11,
         "nosec": 0,
         "skipped_tests": 0
       },
       "_totals": {
-        "CONFIDENCE.HIGH": 1,
-        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.HIGH": 0,
+        "CONFIDENCE.LOW": 1,
         "CONFIDENCE.MEDIUM": 0,
         "CONFIDENCE.UNDEFINED": 0,
         "SEVERITY.HIGH": 0,
         "SEVERITY.LOW": 0,
         "SEVERITY.MEDIUM": 1,
         "SEVERITY.UNDEFINED": 0,
-        "loc": 6,
+        "loc": 11,
         "nosec": 0,
         "skipped_tests": 0
       }
     },
     "results": [
       {
-        "code": "6 \n7 print(eval(\"os.chmod('%s', 0o777)\" % 'test.txt'))\n",
-        "col_offset": 6,
-        "end_col_offset": 48,
-        "filename": "/tmp/tmpqhlfiqln/dfc2225f-db9d-432b-93b0-a23ee1f1edb5.py",
-        "issue_confidence": "HIGH",
+        "code": "9 params = {\"arg\": \"value\"}\n10 response = requests.get(url, params=params)\n11 data = response.json()\n",
+        "col_offset": 11,
+        "end_col_offset": 43,
+        "filename": "/tmp/tmpto__q18l/3d575b90-8feb-43f0-acfd-8b0f5cbe4fc2.py",
+        "issue_confidence": "LOW",
         "issue_cwe": {
-          "id": 78,
-          "link": "https://cwe.mitre.org/data/definitions/78.html"
+          "id": 400,
+          "link": "https://cwe.mitre.org/data/definitions/400.html"
         },
         "issue_severity": "MEDIUM",
-        "issue_text": "Use of possibly insecure function - consider using safer ast.literal_eval.",
-        "line_number": 7,
+        "issue_text": "Requests call without timeout",
+        "line_number": 10,
         "line_range": [
-          7
+          10
         ],
-        "more_info": "https://bandit.readthedocs.io/en/1.7.5/blacklists/blacklist_calls.html#b307-eval",
-        "test_id": "B307",
-        "test_name": "blacklist"
+        "more_info": "https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html",
+        "test_id": "B113",
+        "test_name": "request_without_timeout"
       }
     ]
   }
@@ -128,13 +128,18 @@ Security linter:
 Security Error:
 import iris, datetime
 def get_answer():
-    patients = self.CallFHIR('/Patient?_summary')
-    total_patients = patients['total']
+    patients_bundle = self.CallFHIR('/Patient?_summary')
+    total_patients = patients_bundle['total']
     return total_patients
 
-print(eval("os.chmod('%s', 0o777)" % 'test.txt'))
-Issues: {'errors': [], 'generated_at': '2023-07-02T05:23:20Z', 'metrics': {'/tmp/tmpqhlfiqln/dfc2225f-db9d-432b-93b0-a23ee1f1edb5.py': {'CONFIDENCE.HIGH': 1, 'CONFIDENCE.LOW': 0, 'CONFIDENCE.MEDIUM': 0, 'CONFIDENCE.UNDEFINED': 0, 'SEVERITY.HIGH': 0, 'SEVERITY.LOW': 0, 'SEVERITY.MEDIUM': 1, 'SEVERITY.UNDEFINED': 0, 'loc': 6, 'nosec': 0, 'skipped_tests': 0}, '_totals': {'CONFIDENCE.HIGH': 1, 'CONFIDENCE.LOW': 0, 'CONFIDENCE.MEDIUM': 0, 'CONFIDENCE.UNDEFINED': 0, 'SEVERITY.HIGH': 0, 'SEVERITY.LOW': 0, 'SEVERITY.MEDIUM': 1, 'SEVERITY.UNDEFINED': 0, 'loc': 6, 'nosec': 0, 'skipped_tests': 0}}, 'results': [{'code': '6 \n7 print(eval("os.chmod(\'%s\', 0o777)" % \'test.txt\'))\n', 'col_offset': 6, 'end_col_offset': 48, 'filename': '/tmp/tmpqhlfiqln/dfc2225f-db9d-432b-93b0-a23ee1f1edb5.py', 'issue_confidence': 'HIGH', 'issue_cwe': {'id': 78, 'link': 'https://cwe.mitre.org/data/definitions/78.html'}, 'issue_severity': 'MEDIUM', 'issue_text': 'Use of possibly insecure function - consider using safer ast.literal_eval.', 'line_number': 7, 'line_range': [7], 'more_info': 'https://bandit.readthedocs.io/en/1.7.5/blacklists/blacklist_calls.html#b307-eval', 'test_id': 'B307', 'test_name': 'blacklist'}]}
+import requests
+url = "https://postman-echo.com/get"
+params = {"arg": "value"}
+response = requests.get(url, params=params)
+data = response.json()
+print(f"oh-oh: {data}")
+Issues: {'errors': [], 'generated_at': '2023-07-02T19:39:42Z', 'metrics': {'/tmp/tmpto__q18l/3d575b90-8feb-43f0-acfd-8b0f5cbe4fc2.py': {'CONFIDENCE.HIGH': 0, 'CONFIDENCE.LOW': 1, 'CONFIDENCE.MEDIUM': 0, 'CONFIDENCE.UNDEFINED': 0, 'SEVERITY.HIGH': 0, 'SEVERITY.LOW': 0, 'SEVERITY.MEDIUM': 1, 'SEVERITY.UNDEFINED': 0, 'loc': 11, 'nosec': 0, 'skipped_tests': 0}, '_totals': {'CONFIDENCE.HIGH': 0, 'CONFIDENCE.LOW': 1, 'CONFIDENCE.MEDIUM': 0, 'CONFIDENCE.UNDEFINED': 0, 'SEVERITY.HIGH': 0, 'SEVERITY.LOW': 0, 'SEVERITY.MEDIUM': 1, 'SEVERITY.UNDEFINED': 0, 'loc': 11, 'nosec': 0, 'skipped_tests': 0}}, 'results': [{'code': '9 params = {"arg": "value"}\n10 response = requests.get(url, params=params)\n11 data = response.json()\n', 'col_offset': 11, 'end_col_offset': 43, 'filename': '/tmp/tmpto__q18l/3d575b90-8feb-43f0-acfd-8b0f5cbe4fc2.py', 'issue_confidence': 'LOW', 'issue_cwe': {'id': 400, 'link': 'https://cwe.mitre.org/data/definitions/400.html'}, 'issue_severity': 'MEDIUM', 'issue_text': 'Requests call without timeout', 'line_number': 10, 'line_range': [10], 'more_info': 'https://bandit.readthedocs.io/en/1.7.5/plugins/b113_request_without_timeout.html', 'test_id': 'B113', 'test_name': 'request_without_timeout'}]}
 --------------------------------------------------------------------------------
 Error:
-{"error": "sessionId: 6cad7c715386409588dea5028323b5a3\nTraceback (most recent call last):\n  File \"FHIRGenerativeAIService\", line 18, in GetAnswer\n  File \"PythonService\", line 19, in ExecutePythonCode\nException: Code contains security issues\n"}
+{"error": "sessionId: 150fdec3860e4be2bc163c4c2005be06\nTraceback (most recent call last):\n  File \"FHIRGenerativeAIService\", line 18, in GetAnswer\n  File \"PythonService\", line 18, in ExecutePythonCode\nException: Code contains security issues\n"}
 --------------------------------------------------------------------------------

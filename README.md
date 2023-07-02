@@ -24,7 +24,7 @@ What make me most courious about it was the use of ChatGPT to **programming** AR
 
 So I thought - why if a try something similar, but using FHIR and Python? Here is what I came up with:
 
-![Project basic idea](./misc/img/project-diagram-01.png)
+![Project basic idea](https://raw.githubusercontent.com/jrpereirajr/iris-fhir-generative-ai/357f430362b6d9d20395d120c1243f008303c458/misc/img/project-diagram-01.png)
 
 Its main elements are:
 - A prompt engineering module which will instruct then AI model to use FHIR and Python
@@ -45,7 +45,7 @@ But, this design also leads to some questions like:
 
 Thus, in order to build some support to these questions, I did some elaboration on the initial design and got this:
 
-![Project refined idea](./misc/img/project-diagram-02.png)
+![Project refined idea](https://raw.githubusercontent.com/jrpereirajr/iris-fhir-generative-ai/357f430362b6d9d20395d120c1243f008303c458/misc/img/project-diagram-02.png)
 
 Now, some new elements was added to the project:
 - A code analyzer to scan for security issues
@@ -184,7 +184,7 @@ Each test was performed 5 times and them outputs are stored in the [this](misc/t
 
 ### Accuracy
 
-For the test of the question #1, all the runs returned the same correct value: `6`, so it was `100%` correct and had no errors.
+For the test of the question #1, there were `14 results 6`, and `1 error`. The correct value is `6`. So it was `100%` correct, but had execution failed of `6%`.
 
 SQL statement to validate the #1 result:
 
@@ -194,7 +194,7 @@ count(*)
 FROM HSFHIR_X0001_S.Patient
 ```
 
-For the test of the question #2, there were `1 result 52`, `2 results 52.5` and `2 erros`. The correct value - considering ages with decimal values, is `52.5`. So I consider both values as correct as this little difference probably is due an ambiguous prompt - it doesn't mention anything about allowing or not ages with decimal values. So it was `100%` correct, but had execution failed of `40%`.
+For the test of the question #2, there were `3 result 52`, `6 results 52.5` and `6 errors`. The correct value - considering ages with decimal values, is `52.5`. So I consider both values as correct as this little difference probably is due an ambiguous prompt - it doesn't mention anything about allowing or not ages with decimal values. So it was `100%` correct, but had execution failed of `40%`.
 
 SQL statement to validate the #2 result:
 
@@ -204,7 +204,7 @@ birthdate, DATEDIFF(yy,birthdate,current_date), avg(DATEDIFF(yy,birthdate,curren
 FROM HSFHIR_X0001_S.Patient
 ```
 
-For the test of the question #3, there were `1 error` and `4 tables with 23 distinct elements`. The tables values was not in the same position and format, but again I'll consider this due a malformed prompt. So it was `100%` correct, but had execution failed of `20%`.
+For the test of the question #3, there were `3 error` and `12 tables with 23 distinct elements`. The tables values was not in the same position and format, but again I'll consider this due a malformed prompt. So it was `100%` correct, but had execution failed of `20%`.
 
 SQL statement to validate the #3 result:
 
@@ -215,7 +215,7 @@ FROM HSFHIR_X0001_S.Condition
 group by code
 ```
 
-For the test of the question #4, there were `2 errors` and `3 results 7`. The correct value is `4`. So it was `0%` correct, and had execution failed of `40%`.
+For the test of the question #4, there were `2 errors`, `12 results 7` and `1 result 4`. The correct value is `4`. So it was `12%` correct, and had execution failed of `13%`.
 
 SQL statement to validate the #4 result:
 ```sql
@@ -227,11 +227,11 @@ where code like '%444814009%'
 group by p.Key
 ```
 
-For the test of the question #5, there were `4 errors` and `1 result 4`. The correct value is `4`. So it was `100%` correct, and had execution failed of `80%`.
+For the test of the question #5, there were `11 errors`, `3 result 4` and `1 result 0.6`. The correct value is `4`. So it was `75%` correct, and had execution failed of `73%`.
 
 The SQL used to validate the #5 result is the same used for the #4.
 
-For the test of the question #6, there were `4 errors` and `1 result {female: 4, male: 2, other: 0}`. The correct value is `{female: 3, male: 1, other: 0}`. So it was `0%` correct, and had execution failed of `80%`.
+For the test of the question #6, there were `12 errors` and `3 result {female: 4, male: 2, other: 0}`. The correct value is `{female: 3, male: 1, other: 0}`. So it was `0%` correct, and had execution failed of `80%`.
 
 SQL statement to validate the #6 result:
 ```sql
@@ -247,11 +247,11 @@ Summarizing all results:
 
 | Test # | Accuracy | Execution Failure |
 |--------|----------|-------------------|
-| 1      | 100%     | 0%                |
+| 1      | 100%     | 6%                |
 | 2      | 100%     | 40%               |
 | 3      | 100%     | 20%               |
-| 4      | 0%       | 40%               |
-| 5      | 100%     | 80%               |
+| 4      | 12%      | 13%               |
+| 5      | 75 %     | 73%               |
 | 6      | 0%       | 80%               |
 
 ### Security
@@ -260,15 +260,29 @@ As you can check in the codes generates in the [tests directory](misc/tests-accu
 
 So, in order to test if the code analyzer was able to detect security issues, the [module that executes Python code](src/fhirgenerativeai/PythonService.cls) has a property called `CodeInjection` where malicious code can be injected in order to be tested.
 
-So the following code was injected:
+So the following codes were injected for security testing:
 
 ```python
-"\nprint(eval(""os.chmod('%s', 0o777)"" % 'test.txt'))"
+print(eval("os.chmod('%s', 0o777)" % 'test.txt'))
 ```
 
 This code tries to access the SO filesystem and change the permissions of a file. This is clearly a not expected code for the intent of the project, so it must be blocked.
 
-As you can see in the [directory for security tests](misc/tests-security), the code analyzer found the security issue successfully.
+```python
+import requests
+
+url = "https://postman-echo.com/get"
+params = {"arg": "value"}
+
+response = requests.get(url, params=params)
+data = response.json()
+
+print(data)
+```
+
+This code tries to make a HTTP request to an external address - the Postman API in this case. If this code is executed, local information could be easyly accessed by attackers.
+
+As you can see in the [directory for security tests](misc/tests-security), the code analyzer found the security issues successfully.
 
 ## Conclusions
 
