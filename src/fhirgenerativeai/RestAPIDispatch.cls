@@ -19,7 +19,7 @@ ClassMethod SwaggerSpec() As %Status
     Set swagger.info.version = "0.1"
     Set swagger.host = "localhost:32783"
     Write swagger.%ToJSON()
-    Return $$$OK
+    Return tSC
 }
 
 ClassMethod GetAnswer() As %Status
@@ -29,7 +29,7 @@ ClassMethod GetAnswer() As %Status
     Do ##class(%REST.Impl).%SetContentType("application/fhir+json")
     If '##class(%REST.Impl).%CheckAccepts("application/json") {
         Do ##class(%REST.Impl).%ReportRESTError(..#HTTP406NOTACCEPTABLE, $$$ERROR($$$RESTBadAccepts)) 
-        Quit
+        Quit $$$ERROR($$$RESTBadAccepts)
     }
     
     Set stringBody = %request.Content.Read($$$MaxStringLength)
