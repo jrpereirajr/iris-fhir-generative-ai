@@ -12,27 +12,44 @@
         <script src="https://cdn.jsdelivr.net/gh/khushit-shah/WriteIt.js@latest/WriteIt.min.js"></script>
         
     </head>
-    <body class="d-flex align-items-center">
+    <body class="d-flex align-items-center" writeit-autostart>
         <div class="d-flex w-75 mx-auto chat-wrapper mat-card dash-card p-0">
             <div class="message-section w-100 d-flex flex-column justify-content-between">
                 <div class="chat-header d-flex flex-column position-sticky w-100">
                     <div class="d-flex align-items-center justify-content-between px-4 py-2 chat-top">
                         <div class="ml-2 active-user-chat">
-                            <div><img src="logo.png" alt="" style="display: inline-block;"> </div>
-                            <div>IRIS FHIR Easy Generative AI</div>
+                            <div>IRIS FHIR Generative AI</div>
+                            <div>An experiment to use generative AI and FHIR to answer healthcare domain questions on the InterSystems IRIS.</div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="msg-container">
-                <div class="msg-received">Welcome to FHIREasy, how can I help you?</div>
+                <div class="msg-received">Welcome to FHIR Generative AI, how can I help you?</div>
+                <div class="msg-received" style="text-align: left;">
+                    <i>
+                        What to ask? few suggestions:
+                        <ol>
+                            <li>How many patients are in the dataset? <span class="material-symbols-outlined copy-action">content_copy</span></li>
+                            <li>What is the average age of patients? <span  class="material-symbols-outlined copy-action">content_copy</span></li>
+                            <li>Among patients with viral sinusitis (code 444814009), what is the distribution of gender groups? <span class="material-symbols-outlined copy-action">content_copy</span></li>
+                        </ol>
+                    </i>
+                </div>
+            </div>
+            <div id="bubbles" role="status" style="display: none;">
+                <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                </svg>
+                <span class="sr-only">Loading...</span>
             </div>
 
         </div>
         <div class="d-flex align-items-center justify-content-between px-4 py-3 chat-top">
             <div class="flex-column">
                 <input type="search" class="message-input w-100" placeholder="Type your question here..." >
-                <span class="material-symbols-outlined">send</span>
+                <span class="material-symbols-outlined sender">send</span>
             </div>
         </div>
 
@@ -40,11 +57,14 @@
     <script>
 
         const sendPrompt = async () => {
+
+            document.getElementById('bubbles').style = '';
             const prompt = document.querySelector('.message-input'),
                 container = document.querySelector('.msg-container');
             if (!!!prompt.value) return;
             const value = prompt.value,
                 message = document.createElement('div');
+            bubbles.style = '';
             //prompt.value = '';
             message.classList.add('msg-sent');
             container.appendChild(message);
@@ -58,23 +78,8 @@
                 return err.json();
             });
 
-            const receive = document.createElement('div');
-            receive.classList.add('msg-received');
-            receive.id = crypto.randomUUID();
-            receive.setAttribute('writeit-animate', "");
-            receive.setAttribute('writeit-speed', 20)
-            receive.setAttribute('writeit-char', "_");
-            receive.textContent = resp.manufacturer;
-            container.appendChild(receive);
-        }
+            answer(resp);
 
-        const typewriter = (input, text) => {
-            if (!!!text) return
-            text = text.split('');
-            input.innerHTML += text.shift();
-            text = text.join('');
-
-            setTimeout(typeWriter, 175);
         }
 
         window.onload = event => {
@@ -85,10 +90,62 @@
                 }
             }
 
-            document.querySelector('.material-symbols-outlined').addEventListener('click', e => {
+            document.querySelector('.sender').addEventListener('click', e => {
                 sendPrompt();
+            })
+
+            document.querySelectorAll('.copy-action').forEach(el => {
+                el.addEventListener('click', e => {
+                    document.querySelector('.message-input').value = 
+                        e.target.parentNode.textContent.replace('content_copy', '');
+                })
             })
     
         };
+
+        const answer = (resp) => {
+            const trueTypeOf = function (obj) {
+                return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
+            };
+
+            const 
+                container = document.querySelector('.msg-container');
+                        
+            const receive = document.createElement('div');
+            receive.classList.add('msg-received');
+            receive.id = crypto.randomUUID();
+            receive.setAttribute('writeit-animate', "");
+            receive.setAttribute('writeit-speed', 20)
+            receive.setAttribute('writeit-char', "_");
+
+            const result = document.createElement('div'),
+                desc = document.createElement('div');
+            if (trueTypeOf(resp.result) === 'object') {
+                let table = document.createElement('table'),
+                    row, cell;
+                table.classList.add("text-left")
+                table.classList.add("text-sm")
+                table.classList.add("font-light")
+                Object.keys(resp.result).forEach(key => {
+                    row = table.insertRow();
+                    cell = row.insertCell();
+                    cell.textContent = key;
+                    cell = row.insertCell();
+                    cell.textContent = resp.result[key];
+                })
+                result.appendChild(table);
+            } else {
+                result.textContent = 'answer: ' + resp.result;
+            }
+            desc.textContent = resp.desc;
+            desc.classList.add("result-desc");
+            result.classList.add("result");
+
+            receive.appendChild(result);
+            receive.appendChild(desc);
+
+            container.appendChild(receive);
+            document.getElementById('bubbles').style = 'display: none';
+        }
     </script>
 </html>

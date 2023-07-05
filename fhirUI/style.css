@@ -98,3 +98,19 @@ body {
 .message-input::placeholder {
     color: rgba(27, 27, 54, 0.7);
 }
+
+.result-desc {
+    margin-top: 10px;
+    font-size: 12px;
+    text-align: left;
+    font-style: italic;
+    overflow-wrap: break-word;
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 20
+}
