@@ -64,8 +64,6 @@
             if (!!!prompt.value) return;
             const value = prompt.value,
                 message = document.createElement('div');
-            bubbles.style = '';
-            //prompt.value = '';
             message.classList.add('msg-sent');
             container.appendChild(message);
             message.textContent = value;
@@ -80,6 +78,22 @@
 
             answer(resp);
 
+        }
+        const getTrace = async (sessionId) => {
+            document.getElementById('bubbles').style = '';
+            const container = document.querySelector('.msg-container'),
+                message = document.createElement('div'),
+                resp = await fetch(`http://localhost:32783/iris-fhir-generative-ai/api/log/${sessionId}`)
+            .then( response => {
+                return response.text();
+            }).catch(err => {
+                console.log(err);
+            });
+
+            message.classList.add('msg-sent');
+            message.innerHTML = resp.replaceAll('\\n','<br />').replaceAll('\\t','');
+            container.appendChild(message);
+            document.getElementById('bubbles').style = 'display: none';
         }
 
         window.onload = event => {
@@ -119,6 +133,7 @@
             receive.setAttribute('writeit-char', "_");
 
             const result = document.createElement('div'),
+                trace = document.createElement('div'),
                 desc = document.createElement('div');
             if (trueTypeOf(resp.result) === 'object') {
                 let table = document.createElement('table'),
@@ -140,9 +155,16 @@
             desc.textContent = resp.desc;
             desc.classList.add("result-desc");
             result.classList.add("result");
+            trace.classList.add("trace");
+
+            trace.addEventListener('click', e => {
+                getTrace(resp.sessionId);
+            })
+            trace.textContent = "answer details";
 
             receive.appendChild(result);
             receive.appendChild(desc);
+            receive.appendChild(trace);
 
             container.appendChild(receive);
             document.getElementById('bubbles').style = 'display: none';

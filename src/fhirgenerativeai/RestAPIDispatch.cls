@@ -7,6 +7,7 @@ XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
 
 <Route Url="/_spec" Method="GET" Call="SwaggerSpec" />
 <Route Url="/get-answer" Method="POST" Call="GetAnswer" Cors="true"/>
+<Route Url="/log/:sessionId" Method="GET" Call="GetLog" Cors="true"/>
 </Routes>
 }
 
@@ -41,6 +42,14 @@ ClassMethod GetAnswer() As %Status
     Throw:('$IsObject(answer)) ##class(%Exception.General).%New("Error getting answer")
 
     Write answer.%ToJSON()
+    Return sc
+}
+
+ClassMethod GetLog(sessionId As %String) As %Status
+{
+    Set sc = $$$OK
+    
+    Do ##class(fhirgenerativeai.FHIRGenerativeAIService).RunInTerminal("", sessionId)
     Return sc
 }
 
