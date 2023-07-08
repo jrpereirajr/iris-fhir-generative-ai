@@ -200,15 +200,19 @@ Returns details about an answer from the FHIRGenerativeAIService, identified by 
 
 Also available as [Postman collection](misc/postman/iris-fhir-generative-ai.postman_collection.json) or [OpenAPI definition](http://localhost:32783/swagger-ui/index.html?url=http://localhost:32783/iris-fhir-generative-ai/api/_spec#/default/GetLog).
 
+![Fig.3 - API in Postman](/misc/img/api-postman-01.png)
+
+<b>Fig.3 - API in Postman</b>
+
 ### By a chat UI
 
 You can try the project by using a chat UI. Its use s pretty straightforward: acess it [here](http://localhost:32783/iris-fhir-generative-ai/chat/FhirEasy_AI.html), type your prompt and hit enter.
 
 The chat will present you the anwser and an explanation.
 
-![Fig.3 - Chat UI](/misc/img/chat-01.png)
+![Fig.4 - Chat UI](/misc/img/chat-01.png)
 
-<b>Fig.3 - Chat UI</b>
+<b>Fig.4 - Chat UI</b>
 
 ## Prompt Engineering
 
