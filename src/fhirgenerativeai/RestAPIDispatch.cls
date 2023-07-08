@@ -18,7 +18,8 @@ ClassMethod SwaggerSpec() As %Status
     Set swagger.basePath = "/iris-fhir-generative-ai/api"
     Set swagger.info.title = "IntegratedML on FHIR examples API"
     Set swagger.info.version = "0.1"
-    Set swagger.host = "localhost:32783"
+    Set config = ##class(fhirgenerativeai.Config).%New()
+    Set swagger.host = config.GetSwaggerHost()
     Write swagger.%ToJSON()
     Return tSC
 }

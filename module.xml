@@ -43,6 +43,11 @@
         UnauthenticatedEnabled="0" 
         Url="/iris-fhir-generative-ai/chat" 
         UseSessionCookie="2"/>
+        <Invokes>
+          <!-- Creates a default configuration to the project -->
+          <!-- You can overwrite them as your needs -->
+          <Invoke Class="fhirgenerativeai.DefaultConfig" Method="Create" Phase="Activate" When="After" ></Invoke>
+        </Invokes>
     </Module>
   </Document>
 </Export>

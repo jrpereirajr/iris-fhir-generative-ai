@@ -1,9 +1,21 @@
 Class fhirgenerativeai.OpenAIAPIService Extends %RegisteredObject
 {
 
-Property OpenAIChatModel As %String [ InitialExpression = "gpt-3.5-turbo" ];
+Property OpenAIChatModel As %String;
+
+Property OpenAIAPIEnvKey As %String;
+
+Property Config As fhirgenerativeai.Config;
 
 Property Logger As fhirgenerativeai.LogService;
+
+Method %OnNew() As %Status
+{
+    Set ..Config = ##class(fhirgenerativeai.Config).%New()
+    Set ..OpenAIAPIEnvKey = ..Config.GetOpenAIAPIEnvKey()
+    Set ..OpenAIChatModel = ..Config.GetOpenAIChatModel()
+    Return $$$OK
+}
 
 /// Use the OpenAI Chat API to generate a response
 Method OpenAIChat(systemPrompt As %String, prompt As %String) As %SYS.Python [ Language = python ]
@@ -13,7 +25,7 @@ import openai
 import os
 
 # Get the OpenAI API key from OPENAI_API_KEY environment variable
-openai_api_key = os.getenv('OPENAI_API_KEY')
+openai_api_key = os.getenv(self.OpenAIAPIEnvKey)
 
 # Set up your OpenAI API credentials
 openai.api_key = openai_api_key

@@ -1,13 +1,26 @@
 Class fhirgenerativeai.FHIRClientService Extends %RegisteredObject
 {
 
+/// Base URL
+Property BaseURL As %String;
+
+Property Config As fhirgenerativeai.Config;
+
+Method %OnNew() As %Status
+{
+    Set ..Config = ##class(fhirgenerativeai.Config).%New()
+    Set ..BaseURL = ..Config.GetBaseURL()
+    Return $$$OK
+}
+
 /// A simple FHIR client for quick testing
 Method CallFHIR(fhirPath As %String) As %SYS.Python [ Language = python ]
 {
+import iris
 import requests
 
 # set the base URL
-base_url = "http://localhost:52773/fhir/r4"
+base_url = self.BaseURL
 
 # set the FHIR path
 fhir_url = f"{base_url}/{fhirPath}"

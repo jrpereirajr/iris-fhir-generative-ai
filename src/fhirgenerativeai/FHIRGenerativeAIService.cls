@@ -5,6 +5,8 @@ Property SessionId As %String;
 
 Property UserPrompt As %String;
 
+Property Config As fhirgenerativeai.Config;
+
 Property Logger As fhirgenerativeai.LogService;
 
 Property PromptService As fhirgenerativeai.PromptService;
@@ -16,6 +18,8 @@ Property PythonService As fhirgenerativeai.PythonService;
 Method %OnNew() As %Status
 {
     Set ..SessionId = ..CreateUUID()
+
+    Set ..Config = ##class(fhirgenerativeai.Config).%New()
     
     Set ..Logger = ##class(fhirgenerativeai.LogService).%New()
     Set ..Logger.SessionId = ..SessionId
@@ -132,14 +136,17 @@ print(hr)
 print(f"SessionId:\n{sessionId}")
 print(hr)
 
-sql = """select "Desc", Data from fhirgenerativeai.LogTable where SessionId = ?"""
-rs = iris.cls("%SQL.Statement")._ExecDirect("", sql, sessionId)
-if rs._SQLCODE != 0 and rs._SQLCODE != 100:
-    raise Exception(rs._SQLCODE,rs._Message)
 map = {
     'Executing code': "code", 
     'Received user prompt': "prompt"
 }
+
+sql = """select "Desc", Data from fhirgenerativeai.LogTable where SessionId = ?"""
+rs = iris.cls("%SQL.Statement")._ExecDirect("", sql, sessionId)
+
+if rs._SQLCODE != 0 and rs._SQLCODE != 100:
+    raise Exception(rs._SQLCODE,rs._Message)
+
 logCode = iris.cls("fhirgenerativeai.LogCodes")
 while rs._Next():
     print(f"{rs.Desc}:")
