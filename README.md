@@ -26,7 +26,7 @@ What make me most courious about it was the use of ChatGPT to **programming** an
 
 So, I thought - why if I try something similar, but using FHIR and Python? Here is what I came up with:
 
-![Fig.1 - Project basic idea](misc/img/project-diagram-01.png)
+![Fig.1 - Project basic idea](https://github.com/jrpereirajr/iris-fhir-generative-ai/blob/e7dfc2155218210628b3b643bc74934982f97682/misc/img/project-diagram-01.png)
 
 <b>Fig.1 - Project basic idea</b>
 
@@ -51,7 +51,7 @@ But, this design also leads to some questions like:
 
 Thus, in order to build some support to these questions, I did some elaboration on the initial design and got this:
 
-![Fig.2 - Project refined idea](misc/img/project-diagram-02.png)
+![Fig.2 - Project refined idea](https://github.com/jrpereirajr/iris-fhir-generative-ai/blob/e7dfc2155218210628b3b643bc74934982f97682/misc/img/project-diagram-02.png)
 
 <b>Fig.2 - Project refined idea</b>
 
@@ -200,7 +200,7 @@ Returns details about an answer from the FHIRGenerativeAIService, identified by 
 
 Also available as [Postman collection](misc/postman/iris-fhir-generative-ai.postman_collection.json) or [OpenAPI definition](http://localhost:32783/swagger-ui/index.html?url=http://localhost:32783/iris-fhir-generative-ai/api/_spec#/default/GetLog).
 
-![Fig.3 - API in Postman](/misc/img/api-postman-01.png)
+![Fig.3 - API in Postman](https://github.com/jrpereirajr/iris-fhir-generative-ai/blob/e7dfc2155218210628b3b643bc74934982f97682/misc/img/api-postman-01.png)
 
 <b>Fig.3 - API in Postman</b>
 
@@ -210,7 +210,7 @@ You can try the project by using a chat UI. Its use s pretty straightforward: ac
 
 The chat will present you the anwser and an explanation.
 
-![Fig.4 - Chat UI](/misc/img/chat-01.png)
+![Fig.4 - Chat UI](https://github.com/jrpereirajr/iris-fhir-generative-ai/blob/e7dfc2155218210628b3b643bc74934982f97682/misc/img/chat-01.png)
 
 <b>Fig.4 - Chat UI</b>
 
