@@ -265,6 +265,15 @@ Each test was performed 15 times and them outputs are stored in the [this](misc/
 
 > Please, note that if you try that on your system results may be different, even if you use the same prompt. This is due the stochastic nature of LLM models.
 
+### Unit test
+
+You can run the unit test by openning a IRIS terminal and running the following commands:
+
+```objectscript
+ZN "USER"
+zpm "test iris-fhir-generative-ai"
+```
+
 ### Accuracy
 
 For the test of the question #1, there were `14 results 6`, and `1 error`. The correct value is `6`. So it was `100%` correct, but had execution failed of `6%`.
