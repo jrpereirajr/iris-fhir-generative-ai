@@ -16,6 +16,7 @@
       </Dependencies>
       <Resource Name="fhirtemplate.PKG"/>
       <Resource Name="fhirgenerativeai.PKG"/>
+      <UnitTest Name="/tests" Package="fhirgenerativeai.unittests" Phase="test"/>
       <CSPApplication 
         CookiePath="/iris-fhir-generative-ai/" 
         DefaultTimeout="900" 
