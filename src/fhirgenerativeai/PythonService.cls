@@ -15,29 +15,18 @@ Method %OnNew() As %Status
     Return $$$OK
 }
 
-Method CallFHIR(fhirPath As %String) As %SYS.Python
-{
-    Return ..FHIRClient.CallFHIR(fhirPath)
-}
-
 Method ExecutePythonCode() As %SYS.Python [ Language = python ]
 {
 import iris
 import sys, traceback
 
-# add the iris import
-self.Code = f"import iris, datetime\n{self.Code}"
+# code hooks
+self.InsertPreCode()
 if self.CodeInjection != "" :
     self.Code += f"""\n{self.CodeInjection}"""
 
-# check code for security issues
-results = self.ApplySecurityLinter()
-desc = iris.cls("fhirgenerativeai.LogCodes").Get("SecurityLinter")
-self.Logger.LogEntryPythonDict(desc, {"securityLinter": results})
-if len(results['results']) > 0:
-    desc = iris.cls("fhirgenerativeai.LogCodes").Get("SecurityError")
-    self.Logger.LogEntryPythonDict(desc, {"code": self.Code, "issues": results})
-    raise Exception("Code contains security issues")
+# first analyzes the code
+self.HandleSecurityLinter()
 
 # setup the global context to execute the code
 gbls = {
@@ -47,8 +36,6 @@ gbls = {
 # uses the Python environment to execute the code
 desc = iris.cls("fhirgenerativeai.LogCodes").Get("ExecutingCode")
 self.Logger.LogEntryPythonDict(desc, {"code": self.Code})
-
-# first analyzes the code
 try:
     exec(self.Code, gbls)
 except Exception as e:
@@ -57,7 +44,7 @@ except Exception as e:
     self.Logger.LogEntryPythonDict(desc, {"error": error_msg})
     raise e
 
-# if no issues was found, executes the code
+# if no issues was found, get the result
 try:
     result = gbls['get_answer']()
 except Exception as e:
@@ -68,6 +55,32 @@ except Exception as e:
 
 # if no execution error was found, returns the result
 return result
+}
+
+Method CallFHIR(fhirPath As %String) As %SYS.Python
+{
+    Return ..FHIRClient.CallFHIR(fhirPath)
+}
+
+Method InsertPreCode() [ Language = python ]
+{
+import iris
+# add the iris import
+self.Code = f"import iris, datetime\n{self.Code}"
+}
+
+Method HandleSecurityLinter() [ Language = python ]
+{
+import iris
+
+# check code for security issues
+results = self.ApplySecurityLinter()
+desc = iris.cls("fhirgenerativeai.LogCodes").Get("SecurityLinter")
+self.Logger.LogEntryPythonDict(desc, {"securityLinter": results})
+if len(results['results']) > 0:
+    desc = iris.cls("fhirgenerativeai.LogCodes").Get("SecurityError")
+    self.Logger.LogEntryPythonDict(desc, {"code": self.Code, "issues": results})
+    raise Exception("Code contains security issues")
 }
 
 Method ApplySecurityLinter() As %SYS.Python [ Language = python ]
@@ -89,7 +102,7 @@ def run_bandit_on_python_code(python_code):
 
         # Run the Bandit command as a subprocess and capture the output to a file ommiting the output
         output_filename = tmpdir + '/' + str(uuid.uuid4()) + '-bandit-results.json'
-        cmd = f"python3 -m bandit -f json -o {output_filename} -r {tmpdir + '/' + filename}"
+        cmd = f"python3 -m bandit -f json -o {output_filename} -r {tmpdir + '/' + filename} > /dev/null 2>&1"
         os.system(cmd)
 
         # Read the results from the JSON file and return them as a dictionary
