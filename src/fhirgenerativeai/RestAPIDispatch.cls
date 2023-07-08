@@ -24,6 +24,7 @@ ClassMethod SwaggerSpec() As %Status
     Return tSC
 }
 
+/// Retrieves an answer from the FHIRGenerativeAIService.
 ClassMethod GetAnswer() As %Status
 {
     Set sc = $$$OK
@@ -46,10 +47,12 @@ ClassMethod GetAnswer() As %Status
     Return sc
 }
 
+/// Returns details about an answer from the FHIRGenerativeAIService, identified by its sessionId.
 ClassMethod GetLog(sessionId As %String) As %Status
 {
     Set sc = $$$OK
     
+    Do ##class(%REST.Impl).%SetContentType("text/plain")
     Do ##class(fhirgenerativeai.FHIRGenerativeAIService).RunInTerminal("", sessionId)
     Return sc
 }
