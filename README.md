@@ -16,19 +16,23 @@ This project is an experiment to use OpenAI API to answer to user prompts in the
 
 ## Project idea
 
-Generative AIs, like the [LLM models available on OpenAI](https://platform.openai.com/docs/models), has been demonstrated remarkable power to understand and anwswer high level questions. They use huge amounts of data to train their models, so they can answer complex questions.
+Generative AIs, like the [LLM models available on OpenAI](https://platform.openai.com/docs/models), has been demonstrated remarkable power to understand and answer high level questions. They use huge amounts of data to train their models, so they can answer complex questions.
 
 They can even [use programming languages to create code based on prompts](https://platform.openai.com/examples?category=code) - and I have to confess that the idea of getting my work automated causes me some anxiety. But so far, seems like that it's something that people must to get used to, like it or not. So I decided to do some tries.
 
 The main idea of this project came when I read [this article](https://the-decoder.com/chatgpt-programs-ar-app-using-only-natural-language-chatarkit/) about the [ChatARKit project](https://github.com/trzy/ChatARKit). This project uses OpenAI APIs to interpret voice commands to render 3D objects in live video from smartphones cameras - very cool project. And seems like this is a hot topic, as I found a recent [paper](https://dl.acm.org/doi/pdf/10.1145/3581791.3597296) following a similar idea.
 
-What make me most courious about it was the use of ChatGPT to **programming** AR. As a open github repo was available, I searched into it and found [how the author used ChatGPT to generate code](https://github.com/trzy/ChatARKit/blob/master/iOS/ChatARKit/ChatARKit/Engine/ChatGPT.swift). Later, I found that this kind of techinique is called *prompt engeneering* - [here is a Wikipedia article about it](https://en.wikipedia.org/wiki/Prompt_engineering), or these two more practical references: [1](https://microsoft.github.io/prompt-engineering/) and [2](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/advanced-prompt-engineering?pivots=programming-language-chat-completions).
+What make me most courious about it was the use of ChatGPT to **programming** an AR application. As a open github repo was available, I searched into it and found [how the author used ChatGPT to generate code](https://github.com/trzy/ChatARKit/blob/master/iOS/ChatARKit/ChatARKit/Engine/ChatGPT.swift). Later, I found that this kind of techinique is called *prompt engeneering* - [here is a Wikipedia article about it](https://en.wikipedia.org/wiki/Prompt_engineering), or these two more practical references: [1](https://microsoft.github.io/prompt-engineering/) and [2](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/advanced-prompt-engineering?pivots=programming-language-chat-completions).
 
-So I thought - why if a try something similar, but using FHIR and Python? Here is what I came up with:
+So, I thought - why if I try something similar, but using FHIR and Python? Here is what I came up with:
 
-![Project basic idea](https://raw.githubusercontent.com/jrpereirajr/iris-fhir-generative-ai/357f430362b6d9d20395d120c1243f008303c458/misc/img/project-diagram-01.png)
+<figure>
+<img src="https://raw.githubusercontent.com/jrpereirajr/iris-fhir-generative-ai/357f430362b6d9d20395d120c1243f008303c458/misc/img/project-diagram-01.png" alt="Project basic idea" style="width:100%">
+<figcaption align="center"><b>Fig.1 - Project basic idea</b></figcaption>
+</figure>
 
 Its main elements are:
+
 - A prompt engineering module which will instruct then AI model to use FHIR and Python
 - An OpenAI API integration module
 - A Python interpreter to execute the generated code
@@ -38,20 +42,25 @@ The basic idea is use the [OpenAI Completion API](https://platform.openai.com/do
 
 If this simple design works, users would be allowed to get answers to questions that are not yet supported by the analytical models of applications. Futher, thoses questions answered by the AI model could be analyzed in order to discover new insights on users needs.
 
-Another advantage of this design is the fact that you don't need to expose your data and schemas with an external API. For instance, you can ask question about patients without the need of sending patient data or schema of your database to the AI server. As the AI model uses public available features - FHIR and Python, you don't need to plublish internal data.
+Another advantage of this design is the fact that you don't need to expose your data and schemas with an external API. For instance, you can ask question about patients without the need of sending patient data or schema of your database to the AI server. As the AI model only uses public available features - FHIR and Python in this case, you don't need to plublish internal data.
 
 But, this design also leads to some questions like:
+
 - How to guide the AI to use FHIR and Python according to the users needs?
 - Are the answers generated by the AI model correct? Is it possible to have confidence in them?
 - How to deal with security issues of running a Python code generated externally?
 
 Thus, in order to build some support to these questions, I did some elaboration on the initial design and got this:
 
-![Project refined idea](https://raw.githubusercontent.com/jrpereirajr/iris-fhir-generative-ai/357f430362b6d9d20395d120c1243f008303c458/misc/img/project-diagram-02.png)
+<figure>
+<img src="https://raw.githubusercontent.com/jrpereirajr/iris-fhir-generative-ai/357f430362b6d9d20395d120c1243f008303c458/misc/img/project-diagram-02.png" alt="Project refined idea" style="width:100%">
+<figcaption align = "center"><b>Fig.2 - Project refined idea</b></figcaption>
+</figure>
 
 Now, some new elements was added to the project:
-- A code analyzer to scan for security issues
-- A logger to record important events for fhther analysis
+
+- A Python code analyzer to scan for security issues
+- A logger to record important events for futher analysis
 - An API REST for futher integrations
 
 So, this project aims to be a proof of concept which can support experiments to gather information to try to answer those kind of questions.
@@ -119,6 +128,12 @@ docker-compose up -d
 
 ## Trying the project
 
+You can try the project by running it directly in the terminal, by using an REST API, or using an chat UI.
+
+Follow the instructions below to know how to try each one of them.
+
+### In terminal
+
 To try it, open an IRIS terminal and run the following:
 
 ```objectscript
@@ -141,13 +156,70 @@ You can found output examples for those questions [here](misc/tests-accuacy).
 
 Those questions was suggested by ChatGPT. It was asked that the questions was created by a way which the level of complexity was increasing. The exception was the 3rd question, that was proposed by the author.
 
+### By a REST API
+
+Two endpoints are available (formating in markdown inspiration [here](https://gist.github.com/azagniotov/a4b16faf0febd12efbc6c3d7370383a6)):
+
+<details>
+
+<summary><code>POST</code> <code><b>/get-answer</b></code></summary>
+
+Retrieves an answer from the FHIRGenerativeAIService.
+
+##### Parameters
+
+> | name           |  type     | data type      | description                                                           |
+> |----------------|-----------|----------------|-----------------------------------------------------------------------|
+> | payload (body) |  required | object (JSON)  | A JSON object like this one: {"prompt": "<your prompt>"}              |
+
+##### Responses
+
+> | http code     | content-type              | response                                                            |
+> |---------------|---------------------------|---------------------------------------------------------------------|
+> | `200`         | `application/json`        | `Configuration created successfully`                                |
+
+</details>
+
+<details>
+
+<summary><code>GET</code> <code><b>/log/{sessionId}</b></code></summary>
+
+Returns details about an answer from the FHIRGenerativeAIService, identified by its sessionId. @param sessionId The sessionId of the answer to retrieve
+
+##### Parameters
+
+> | name           |  type     | data type      | description                                                           |
+> |----------------|-----------|----------------|-----------------------------------------------------------------------|
+> | sessionId      |  required | string         | The session ID of a previous answer.                                  |
+
+##### Responses
+
+> | http code     | content-type  | response                                              |
+> |---------------|---------------|-------------------------------------------------------|
+> | `200`         | `text/plain`  | The log of the answer.                                |
+
+</details>
+
+Also available as [Postman collection](misc/postman/iris-fhir-generative-ai.postman_collection.json) or [OpenAPI definition](http://localhost:32783/swagger-ui/index.html?url=http://localhost:32783/iris-fhir-generative-ai/api/_spec#/default/GetLog).
+
+### By a chat UI
+
+You can try the project by using a chat UI. Its use s pretty straightforward: acess it [here](http://localhost:32783/iris-fhir-generative-ai/chat/FhirEasy_AI.html), type your prompt and hit enter.
+
+The chat will present you the anwser and an explanation.
+
+<figure>
+<img src="https://raw.githubusercontent.com/jrpereirajr/iris-fhir-generative-ai/357f430362b6d9d20395d120c1243f008303c458/misc/img/chat-01.png" alt="Project refined idea" style="width:100%">
+<figcaption align = "center"><b>Fig.3 - Chat UI</b></figcaption>
+</figure>
+
 ## Prompt Engineering
 
 The prompt used by the project can be found [here](/src/fhirgenerativeai/PromptService.cls) in the method `GetSystemTemplate()`.
 
 It follows the guides of prompt engineering where first you assign a role to the AI model, and then enter a bunch of contraints and instructions. The intent of each of its section are commented, so you can understand how it works.
 
-Note the use of a kind of interface definition when the model is instructed to assume a function already definied called `CallFHIR()` to interact with FHIR instead of declaring something by itself. This was inpired by the project ChatARKit where the author define a whole of functions that abstracts complex behaviours for using a AR library.
+Note the use of a kind of interface definition when the model is instructed to assume a function already definied called `CallFHIR()` to interact with FHIR instead of declaring something by itself. This was inpired by the project ChatARKit where the author define a set of functions that abstracts complex behaviours for using a AR library.
 
 Here I used this techinique to avoid the model to creating code to do HTTP calls directly.
 
@@ -155,9 +227,9 @@ An interesting finding here was about forcing the AI model to return its respons
 
 Despite beeing clear in the prompt that the response format must be in XML, the AI model just starts to follow this instruction after sending the user prompt in XML format as well. You can see that in the method `FormatUserPrompt()` in the same classe refreced above.
 
-## Code Analyzer
+## Python code Analyzer
 
-This module uses the [bandit library](https://bandit.readthedocs.io/en/latest/) to scan for security issues.
+This module uses the [bandit library](https://bandit.readthedocs.io/en/latest/) to scan for security issues in the generated Python code.
 
 This library generates the AST of a Python program and test it against common security issues. You can find the kind of issues are scanned in those links:
 - [Test plugins](https://bandit.readthedocs.io/en/latest/plugins/index.html#complete-test-plugin-listing)
@@ -204,7 +276,7 @@ count(*)
 FROM HSFHIR_X0001_S.Patient
 ```
 
-For the test of the question #2, there were `3 result 52`, `6 results 52.5` and `6 errors`. The correct value - considering ages with decimal values, is `52.5`. So I consider both values as correct as this little difference probably is due an ambiguous prompt - it doesn't mention anything about allowing or not ages with decimal values. So it was `100%` correct, but had execution failed of `40%`.
+For the test of the question #2, there were `3 results 52`, `6 results 52.5` and `6 errors`. The correct value - considering ages with decimal values, is `52.5`. So I consider both values as correct as this little difference probably is due an ambiguous prompt - it doesn't mention anything about allowing or not ages with decimal values. So it was `100%` correct, but had execution failed of `40%`.
 
 SQL statement to validate the #2 result:
 
@@ -214,7 +286,7 @@ birthdate, DATEDIFF(yy,birthdate,current_date), avg(DATEDIFF(yy,birthdate,curren
 FROM HSFHIR_X0001_S.Patient
 ```
 
-For the test of the question #3, there were `3 error` and `12 tables with 23 distinct elements`. The tables values was not in the same position and format, but again I'll consider this due a malformed prompt. So it was `100%` correct, but had execution failed of `20%`.
+For the test of the question #3, there were `3 error` and `12 tables with 23 rows`. The tables values was not in the same position and format, but again I've considered this due a malformed prompt. So it was `100%` correct, but had execution failed of `20%`.
 
 SQL statement to validate the #3 result:
 
@@ -225,9 +297,10 @@ FROM HSFHIR_X0001_S.Condition
 group by code
 ```
 
-For the test of the question #4, there were `2 errors`, `12 results 7` and `1 result 4`. The correct value is `4`. So it was `12%` correct, and had execution failed of `13%`.
+For the test of the question #4, there were `2 errors`, `12 results 7` and `1 result 4`. The correct value is `4`. So it was `7%` correct, and had execution failed of `13%`.
 
 SQL statement to validate the #4 result:
+
 ```sql
 SELECT 
 p.Key patient, count(c._id) qtde_conditions, list(c.code) conditions
@@ -260,7 +333,7 @@ Summarizing all results:
 | 1      | 100%     | 6%                |
 | 2      | 100%     | 40%               |
 | 3      | 100%     | 20%               |
-| 4      | 12%      | 13%               |
+| 4      | 7%       | 13%               |
 | 5      | 75 %     | 73%               |
 | 6      | 0%       | 80%               |
 
@@ -270,7 +343,7 @@ As you can check in the codes generates in the [tests directory](misc/tests-accu
 
 So, in order to test if the code analyzer was able to detect security issues, the [module that executes Python code](src/fhirgenerativeai/PythonService.cls) has a property called `CodeInjection` where malicious code can be injected in order to be tested.
 
-So the following codes were injected for security testing:
+So the following malicious codes were injected for security testing:
 
 1. Security test #1:
 
@@ -278,7 +351,7 @@ So the following codes were injected for security testing:
 print(eval("os.chmod('%s', 0o777)" % 'test.txt'))
 ```
 
-This code tries to access the SO filesystem and change the permissions of a file. This is clearly a not expected code for the intent of the project, so it must be blocked.
+This code tries to access the OS filesystem and change the permissions of a file. This is clearly a not expected code for the intent of the project, so it must be blocked.
 
 2. Security test #2:
 
@@ -310,7 +383,7 @@ This is due the stochastic nature of the AI model. I mean, in the ChatARKit proj
 
 But, it's important to note that I am not saying that AI models can't perform such tasks. What I'm saying is that the design used in this project needs improvement.
 
-Important to note that this project was not used more advanced techniques to use generatives AIs, like [Langchain](https://python.langchain.com/docs/get_started/introduction.html) and [AutoGPT](https://autogpt.net/autogpt-installation-and-features/). Here a more "pure" approach was used, but using such more sophisticated tools could be lead to better results.
+Important to note that this project did not used more advanced techniques to use generatives AIs, like [Langchain](https://python.langchain.com/docs/get_started/introduction.html) and [AutoGPT](https://autogpt.net/autogpt-installation-and-features/). Here a more "pure" approach was used; perhaps using such more sophisticated tools could be lead to better results.
 
 Regarding security, the code analyzer found all security issues tested.
 

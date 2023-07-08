@@ -17,7 +17,7 @@
       },
       "links": {
         "FHIR generative chat": "http://localhost:${port}/iris-fhir-generative-ai/chat/FhirEasy_AI.html",
-        "FHIR server test": "http://localhost:${port}/fhir/r4/metadata"
+        "OpenAPI definition": "http://localhost:${port}/swagger-ui/index.html?url=http://localhost:32783/iris-fhir-generative-ai/api/_spec"
       }
     },
     "sqltools.connections": [
