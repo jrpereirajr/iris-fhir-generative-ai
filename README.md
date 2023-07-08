@@ -26,10 +26,9 @@ What make me most courious about it was the use of ChatGPT to **programming** an
 
 So, I thought - why if I try something similar, but using FHIR and Python? Here is what I came up with:
 
-<figure>
-<img src="https://raw.githubusercontent.com/jrpereirajr/iris-fhir-generative-ai/357f430362b6d9d20395d120c1243f008303c458/misc/img/project-diagram-01.png" alt="Project basic idea" style="width:100%">
-<figcaption align="center"><b>Fig.1 - Project basic idea</b></figcaption>
-</figure>
+![Fig.1 - Project basic idea](misc/img/project-diagram-01.png)
+
+<b>Fig.1 - Project basic idea</b>
 
 Its main elements are:
 
@@ -52,10 +51,9 @@ But, this design also leads to some questions like:
 
 Thus, in order to build some support to these questions, I did some elaboration on the initial design and got this:
 
-<figure>
-<img src="https://raw.githubusercontent.com/jrpereirajr/iris-fhir-generative-ai/357f430362b6d9d20395d120c1243f008303c458/misc/img/project-diagram-02.png" alt="Project refined idea" style="width:100%">
-<figcaption align = "center"><b>Fig.2 - Project refined idea</b></figcaption>
-</figure>
+![Fig.2 - Project refined idea](misc/img/project-diagram-02.png)
+
+<b>Fig.2 - Project refined idea</b>
 
 Now, some new elements was added to the project:
 
@@ -208,10 +206,9 @@ You can try the project by using a chat UI. Its use s pretty straightforward: ac
 
 The chat will present you the anwser and an explanation.
 
-<figure>
-<img src="https://raw.githubusercontent.com/jrpereirajr/iris-fhir-generative-ai/357f430362b6d9d20395d120c1243f008303c458/misc/img/chat-01.png" alt="Project refined idea" style="width:100%">
-<figcaption align = "center"><b>Fig.3 - Chat UI</b></figcaption>
-</figure>
+![Fig.3 - Chat UI](/misc/img/chat-01.png)
+
+<b>Fig.3 - Chat UI</b>
 
 ## Prompt Engineering
 
