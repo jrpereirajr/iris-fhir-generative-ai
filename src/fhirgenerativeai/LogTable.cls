@@ -11,6 +11,8 @@ Property Data As %String(MAXLEN = 32767);
 
 Property Timestamp As %TimeStamp [ InitialExpression = {$ZDATETIME($ZTIMESTAMP, 3)} ];
 
+Index IdxTimestamp On Timestamp;
+
 Storage Default
 {
 <Data name="LogTableDefaultData">
