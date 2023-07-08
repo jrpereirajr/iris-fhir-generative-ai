@@ -1,0 +1,74 @@
+{
+	"info": {
+		"_postman_id": "f30bb652-25fc-4776-851c-0999128f3fb9",
+		"name": "iris-fhir-generative-ai",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3176642"
+	},
+	"item": [
+		{
+			"name": "http://localhost:32783/iris-fhir-generative-ai/api/get-answer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"prompt\": \"How many patients are in the dataset?\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:32783/iris-fhir-generative-ai/api/get-answer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "32783",
+					"path": [
+						"iris-fhir-generative-ai",
+						"api",
+						"get-answer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:32783/iris-fhir-generative-ai/api/log/3d71eaf263f746a3852770deb66a0983",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"prompt\": \"How many patients are in the dataset?\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:32783/iris-fhir-generative-ai/api/log/3d71eaf263f746a3852770deb66a0983",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "32783",
+					"path": [
+						"iris-fhir-generative-ai",
+						"api",
+						"log",
+						"3d71eaf263f746a3852770deb66a0983"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
