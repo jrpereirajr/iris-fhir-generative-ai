@@ -188,7 +188,7 @@ order by id desc
 
 Some tests was executed to get information to measure the performance of the AI model.
 
-Each test was performed 5 times and them outputs are stored in the [this](misc/tests-accuacy) and [this](misc/tests-security) direcotries.
+Each test was performed 15 times and them outputs are stored in the [this](misc/tests-accuacy) and [this](misc/tests-security) direcotries.
 
 > Please, note that if you try that on your system results may be different, even if you use the same prompt. This is due the stochastic nature of LLM models.
 
