@@ -29,6 +29,20 @@
         Url="/iris-fhir-generative-ai/api" 
         UseSessionCookie="2"
       />
+      <CSPApplication 
+        CookiePath="/iris-fhir-generative-ai" 
+        DefaultTimeout="900" 
+        DeployPath="{cspdir}/csp/${namespace}/" 
+        Description="iris-fhir-generative-ai" 
+        MatchRoles=":{$dbrole}" 
+        PasswordAuthEnabled="1" 
+        Recurse="1" 
+        ServeFiles="1" 
+        ServeFilesTimeout="3600" 
+        SourcePath="/fhirUI" 
+        UnauthenticatedEnabled="0" 
+        Url="/iris-fhir-generative-ai/chat" 
+        UseSessionCookie="2"/>
     </Module>
   </Document>
 </Export>
