@@ -91,7 +91,7 @@
             });
 
             message.classList.add('msg-sent');
-            message.innerHTML = resp.replaceAll('\\n','<br />').replaceAll('\\t','');
+            message.innerHTML = `<pre>${resp.replaceAll('\\n','<br />').replaceAll('\\t','')}</pre>`;
             container.appendChild(message);
             document.getElementById('bubbles').style = 'display: none';
         }

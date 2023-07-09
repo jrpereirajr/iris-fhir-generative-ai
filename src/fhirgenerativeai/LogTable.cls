@@ -11,6 +11,10 @@ Property Data As %String(MAXLEN = 32767);
 
 Property Timestamp As %TimeStamp [ InitialExpression = {$ZDATETIME($ZTIMESTAMP, 3)} ];
 
+Index IdxSessionId On SessionId;
+
+Index IdxType On Type;
+
 Index IdxTimestamp On Timestamp;
 
 Storage Default

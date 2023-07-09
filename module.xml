@@ -48,6 +48,13 @@
           <!-- Creates a default configuration to the project -->
           <!-- You can overwrite them as your needs -->
           <Invoke Class="fhirgenerativeai.DefaultConfig" Method="Create" Phase="Activate" When="After" ></Invoke>
+          <!-- IRIS BI enabling -->
+          <Invoke Class="fhirgenerativeai.Utils" Method="EnableIRISBI">
+          </Invoke>
+          <!-- Log Analytics Cube -->
+          <Invoke Class="%DeepSee.Utils" Method="%BuildCube">
+            <Arg>LogAnalyticsCube</Arg>
+          </Invoke>
         </Invokes>
     </Module>
   </Document>

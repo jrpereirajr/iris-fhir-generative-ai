@@ -124,6 +124,19 @@ docker-compose build --build-arg OPENAI_API_KEY=$env:OPENAI_API_KEY
 docker-compose up -d
 ```
 
+### IPM
+
+In order to install the project via Intersystems Package Manager (IPM), call in any namespace:
+
+```objectscript
+zpm "install iris-fhir-generative-ai"
+```
+Or call the following for installing programmatically:
+
+```objectscript
+Set sc = $zpm("install iris-fhir-generative-ai")
+```
+
 ## Trying the project
 
 You can try the project by running it directly in the terminal, by using an REST API, or using an chat UI.
