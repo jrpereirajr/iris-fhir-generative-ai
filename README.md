@@ -407,6 +407,13 @@ Here it's used to extract concepts from data of each log. Check the method `Save
 
 So, we create a [IRIS BI Cube](/src/fhirgenerativeai/LogAnalyticsCube.cls) for counting concepts and relate them with other dimensions, like log types and descriptions, for instance.
 
+After you got some prompts answered, you are ready to build the cube. You can do this by [accessing the cube manager]() and hit the `Build` button, or do it programatically:
+
+```objectscript
+ZN "USER"
+Do ##class(%DeepSee.Utils).%BuildCube("LogAnalyticsCube")
+```
+
 With this cube, we create a [dashboard](http://localhost:32783/csp/user/_DeepSee.UserPortal.DashboardViewer.zen?DASHBOARD=fhirgenerativeai/LogAnalyticsDashboard.dashboard) which people can get insights about how the prompts are going in terms of what users are asking and if those prompts are beeing executed or not.
 
 ![Fig.5 - Log Analytics Dashboard](https://raw.githubusercontent.com/jrpereirajr/iris-fhir-generative-ai/master/misc/img/loganalytics-01.png)
