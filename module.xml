@@ -3,7 +3,7 @@
   <Document name="iris-fhir-generative-ai.ZPM">
     <Module>
       <Name>iris-fhir-generative-ai</Name>
-      <Version>1.0.8</Version>
+      <Version>1.0.9</Version>
       <Description>InterSystems FHIR Server assisted by generative AI</Description>
       <Keywords>FHIR,Server,AI,generative AI,OpenAI,chat-gpt</Keywords>
       <Packaging>module</Packaging>
