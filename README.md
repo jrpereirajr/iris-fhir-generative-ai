@@ -394,6 +394,51 @@ This code tries to make a HTTP request to an external address - the Postman API 
 
 As you can see in the [directory for security tests](misc/tests-security), the code analyzer found the security issues successfully.
 
+## Analysis
+
+As said above, the project logs all events for analysis. Here we are going to discuss two types of analysis covered by analytics embedded in the project:
+
+- Users prompts
+- Execution errors
+
+In order to extract useful data to apply analytics, we used the [iknowpy](https://pypi.org/project/iknowpy/) library - an opensource library for Natural Language Processing based in the [iKnow for IRIS Data Platform](https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=GIKNOW). It makes possible identifies entities (phrases) and their semantic context in natural language text in  several languages. Here it's used to extract concepts from data of each log.
+
+So, we create a [IRIS BI Cube](/src/fhirgenerativeai/LogAnalyticsCube.cls) for counting concepts and relate them with other dimensions, like log types and descriptions for instance.
+
+With this cube, we create a [dashboard](http://localhost:32783/csp/user/_DeepSee.UserPortal.DashboardViewer.zen?DASHBOARD=fhirgenerativeai/LogAnalyticsDashboard.dashboard) where the people can get insights about how the prompts are going in terms of what users are asking and if those prompts are beeing executed.
+
+![Fig.5 - Log Analytics Dashboard](https://raw.githubusercontent.com/jrpereirajr/iris-fhir-generative-ai/master/misc/img/loganalytics-01.png)
+
+### Users prompts analysis
+
+The image below shows the results of the users prompts analysis after running the methods `DoAccuracyTests` and `DoAccuracyExtendedSetTests` of the [class `fhirgenerativeai.Tests`](src/fhirgenerativeai/Tests.cls). It uses a treemap to show the most prevelent concepts.
+
+![Fig.6 - Detail of users prompts](https://raw.githubusercontent.com/jrpereirajr/iris-fhir-generative-ai/master/misc/img/loganalytics-02.png)
+
+As you can see, the most prevelent concepts are meaningless concepts like `prompt`, `code`, `dataset` etc.
+
+Let's exclude these concepts from the analysis:
+
+![Fig.7 - Exclusion of meaningless concepts](https://raw.githubusercontent.com/jrpereirajr/iris-fhir-generative-ai/master/misc/img/loganalytics-03.png)
+
+Then, get the top 10 concepts:
+
+![Fig.8 - Top 10 concepts for users prompts](https://raw.githubusercontent.com/jrpereirajr/iris-fhir-generative-ai/master/misc/img/loganalytics-04.png)
+
+Now, we can see that users are asking questions rearging patients, and conditions like viral sinusitis and diabetes, for instance. This could lead system administrators to get insights about what user are specting and proceed to attend such needs.
+
+### Execution errors analysis
+
+For the execution errors analysis, we have the same visualization as the users prompts. But now, displaying concepts related to execution errors.
+
+![Fig.9 - Details of execution errors](https://raw.githubusercontent.com/jrpereirajr/iris-fhir-generative-ai/master/misc/img/loganalytics-05.png)
+
+And like for the users prompts analysis, we exclude meaningless concepts and got just the top 10 concepts:
+
+![Fig.10 - Top 10 concepts for execution errors](https://raw.githubusercontent.com/jrpereirajr/iris-fhir-generative-ai/master/misc/img/loganalytics-06.png)
+
+Now we can note, for instance, that concepts like "bad request" and 400 are relevant. This means that the AI model are generating code that tends to setting invalid FHIR requests.
+
 ## Conclusions
 
 For accuracy, the AI model get correct results for the questions of low complexity, but starts to fail as the question complexity increases. The same was observed for failures in execution. So, as more complex are the questions, more the AI model generates code that won't execute and with more probability to lead to wrong results.
