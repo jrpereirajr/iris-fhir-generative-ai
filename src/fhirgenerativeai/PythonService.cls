@@ -41,7 +41,7 @@ try:
 except Exception as e:
     error_msg = traceback.format_exc()
     desc = iris.cls("fhirgenerativeai.LogCodes").Get("ParseCodeError")
-    self.Logger.LogEntryPythonDict(desc, {"error": error_msg})
+    self.Logger.LogEntryPythonDict(desc, {"error": error_msg}, "ERROR")
     raise e
 
 # if no issues was found, get the result
@@ -50,7 +50,7 @@ try:
 except Exception as e:
     error_msg = traceback.format_exc()
     desc = iris.cls("fhirgenerativeai.LogCodes").Get("ExecuteCodeError")
-    self.Logger.LogEntryPythonDict(desc, {"error": error_msg})
+    self.Logger.LogEntryPythonDict(desc, {"error": error_msg}, "ERROR")
     raise e
 
 # if no execution error was found, returns the result

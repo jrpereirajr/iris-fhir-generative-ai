@@ -20,6 +20,30 @@ ClassMethod DoAccuracyTests(repetition As %Integer = 5)
     }
 }
 
+ClassMethod DoAccuracyExtendedSetTests(repetition As %Integer = 5)
+{
+    Set prompts = $LB(
+        "What are the most prevalent medical conditions among the patients in the dataset?",
+        "How many patients have had encounters with a specific healthcare provider?",
+        "What is the average length of stay in the hospital for patients with a particular medical condition?",
+        "What is the average body mass index (BMI) of the patients in the dataset?",
+        "How many patients have undergone a surgical procedure in the past year?",
+        "What is the most common type of medication prescribed to patients in the dataset?",
+        "How many patients in the dataset have reported allergies to a specific allergen?",
+        "What is the prevalence of diabetes in the simulated patient population?",
+        "For patients with diabetes, what is the average hemoglobin A1C level?",
+        "How does the average hemoglobin A1C level vary based on the number of annual primary care visits for patients with diabetes?",
+        "What proportion of patients with diabetes has achieved the target hemoglobin A1C level of less than 7%?"
+    )
+    // loop over each prompt
+    For i = 1:1:$LL(prompts) {
+        Set prompt = $LG(prompts, i)
+        Write "processing prompt: "_prompt_"...",!
+        Do ..RepeatTest(prompt, repetition, i)
+        Hang $RANDOM(3)
+    }
+}
+
 ClassMethod DoSecurityTests(repetition As %Integer = 1)
 {
     Set codeInjections = $LB(

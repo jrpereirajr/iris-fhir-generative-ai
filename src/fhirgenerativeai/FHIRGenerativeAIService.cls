@@ -67,7 +67,7 @@ try:
 except Exception as e:
     error_msg = f"sessionId: {self.SessionId}\n{traceback.format_exc()}"
     desc = iris.cls("fhirgenerativeai.LogCodes").Get("GenericError")
-    self.Logger.LogEntryPythonDict(desc, {"error": error_msg})
+    self.Logger.LogEntryPythonDict(desc, {"error": error_msg}, "ERROR")
     raise Exception(error_msg)
 }
 
