@@ -13,11 +13,12 @@ ClassMethod LoadConcepts()
     Set rs = ##class(%SQL.Statement).%ExecDirect(,sql)
     While (rs.%Next()) {
         Write rs.Id,!
-        Do ..SaveCencepts(rs.Id, rs.Data)
+        Do ..SaveConcepts(rs.Id, rs.Data)
     }
 }
 
-ClassMethod SaveCencepts(logId As %Integer, text As %String) [ Language = python ]
+/// This code was heavily inspired by [this one](https://github.com/isc-tdyar/iris-fhirsqlbuilder-dbt-integratedml/blob/master/src/User/funcGetEntitiesList.cls).
+ClassMethod SaveConcepts(logId As %Integer, text As %String) [ Language = python ]
 {
     import iris
     import iknowpy
