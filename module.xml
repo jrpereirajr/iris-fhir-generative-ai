@@ -13,6 +13,10 @@
           <Name>swagger-ui</Name>
           <Version>*</Version>
         </ModuleReference>
+        <ModuleReference>
+          <Name>dsw</Name>
+          <Version>*</Version>
+        </ModuleReference>
       </Dependencies>
       <Resource Name="fhirtemplate.PKG"/>
       <Resource Name="fhirgenerativeai.PKG"/>
@@ -33,7 +37,7 @@
       <CSPApplication 
         CookiePath="/iris-fhir-generative-ai" 
         DefaultTimeout="900" 
-        DeployPath="{cspdir}/csp/${namespace}/" 
+        DeployPath="${cspdir}/csp/${namespace}/" 
         Description="iris-fhir-generative-ai" 
         MatchRoles=":{$dbrole}" 
         PasswordAuthEnabled="1" 

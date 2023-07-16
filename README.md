@@ -426,6 +426,10 @@ With this cube, we create a [dashboard](http://localhost:32783/csp/user/_DeepSee
 
 ![Fig.5 - Log Analytics Dashboard](https://raw.githubusercontent.com/jrpereirajr/iris-fhir-generative-ai/master/misc/img/loganalytics-01.png)
 
+You can also use [Deepsee Web](https://openexchange.intersystems.com/package/DeepSeeWeb) to visualize the [dashboard](http://localhost:32783/dsw/index.html#/USER/fhirgenerativeai/LogAnalyticsDashboard.dashboard).
+
+![Deepsee Web](https://raw.githubusercontent.com/jrpereirajr/iris-fhir-generative-ai/master/misc/img/loganalytics-07.png)
+
 ### Users prompts analysis
 
 The image below shows the result of the users prompts analysis after running the methods `DoAccuracyTests` and `DoAccuracyExtendedSetTests()` of the [class `fhirgenerativeai.Tests()`](src/fhirgenerativeai/Tests.cls). It uses a treemap to show the most prevelent concepts.
