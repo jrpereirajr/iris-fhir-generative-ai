@@ -42,12 +42,13 @@ body {
 .msg-sent{
     background: rgba(255, 255, 255, 0.15);
     border-radius: 5px 0 5px 5px;
-    float: right;
+    float: left;
     clear: both;
     margin: 0 5px 8px;
     padding: 10px;
     position: relative;
     color: #322761;
+    text-align: justify;
 }
 
 .msg-sent::after{
